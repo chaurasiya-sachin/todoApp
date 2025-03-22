@@ -1,13 +1,25 @@
 import express from 'express'
+import { db_connection } from './db/db_connection.js';
+import userRoute from "./route/user.route.js"
+import cookieParser from 'cookie-parser';
 
+
+// database connection 
+db_connection()
+
+// app intilizations
 const app = express();
-const PORT_NO=6000;
 
-app.get("/",(req,res)=>{
-    res.end("Server is up & running on port no :6000");
-})
+// middleware
+app.use(express.json())
+app.use(cookieParser())
 
-app.listen(PORT_NO,()=>{
-    console.log("Server is up & running on port no. :",PORT_NO);
+// route middleware
+app.use("/api/v1/user",userRoute)
+
+
+// port listining
+app.listen(900,()=>{
+    console.log(`Server is up & running on port no. :`);
     
 })
